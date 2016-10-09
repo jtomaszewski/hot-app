@@ -2,6 +2,10 @@
 
 Simple wrapper to make your js app start, stop and restart easily through the browser console or f.e. webpack hot reload system.
 
+Console screen: https://www.dropbox.com/s/epb4dntthllphhi/Screenshot%202016-10-09%2021.18.48.png?dl=0
+
+Video: https://drive.google.com/file/d/0B5-IASgGnqwdT2JUcWpVTUpmZnM/view
+
 # Usage example: Webpack, hot reload, angular1 with angular2 upgrade
 
 ```ts
