@@ -25,7 +25,7 @@
     if (options.oldApp) {
       this.rootElementHtml = options.oldApp.rootElementHtml;
     }
-
+    this.data = {};
     this._isRunning = false;
   }
 

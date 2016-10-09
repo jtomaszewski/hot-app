@@ -6,7 +6,17 @@ Console screen: https://www.dropbox.com/s/epb4dntthllphhi/Screenshot%202016-10-0
 
 Video: https://drive.google.com/file/d/0B5-IASgGnqwdT2JUcWpVTUpmZnM/view
 
-# Usage example: Webpack, hot reload, angular1 with angular2 upgrade
+# Usage examples
+
+### [preboot/angular-webpack](https://github.com/preboot/angular-webpack) seed with hot-app
+
+https://github.com/jtomaszewski/angular-webpack/tree/hot-app
+
+### [AngularClass/angular2-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter) with hot-app
+
+https://github.com/jtomaszewski/angular2-webpack-starter/tree/hot-app
+
+### Webpack, hot reload, angular1 with angular2 upgrade
 
 ```ts
 // -- helpers
@@ -32,17 +42,17 @@ import { adapter } from './upgrade_adapter';
 
 import { HotApp } from 'hot-app';
 
-let app = (<any>window).app = new HotApp({
+const app = (<any>window).app = new HotApp({
   oldApp: (<any>window).app,
   getRootElement: function() { return document.body; },
   startFn: (app, onStart) => {
-    (<any>app).ng2 = adapter.bootstrap(app.getRootElement(), ['app'], {strictDi: false});
-    (<any>app).ng2.ready(() => {
+    app.data.ng2 = adapter.bootstrap(app.getRootElement(), ['app'], {strictDi: false});
+    app.data.ng2.ready(() => {
       onStart();
     });
   },
   stopFn: (app, onStop) => {
-    (<any>app).ng2.dispose();
+    app.data.ng2.dispose();
     onStop();
   }
 });
@@ -59,7 +69,7 @@ if (module.hot) {
 }
 ```
 
-# Usage example: Webpack, hot reload, angular2
+### Webpack, hot reload, angular2
 
 ```ts
 
@@ -70,17 +80,23 @@ import { adapter } from './upgrade_adapter';
 
 import { HotApp } from 'hot-app';
 
-let app = (<any>window).app = new HotApp({
+export function main(): Promise<any> {
+  return platformBrowserDynamic()
+    .bootstrapModule(AppModule)
+    .catch(err => console.error(err));
+}
+
+const app = (<any>window).app = new HotApp({
   oldApp: (<any>window).app,
   getRootElement: function() { return document.body; },
   startFn: (app, onStart) => {
-    (<any>app).ng2 = adapter.bootstrap(app.getRootElement(), ['app'], {strictDi: false});
-    (<any>app).ng2.ready(() => {
+    main().then(moduleRef => {
+      app.data.moduleRef = moduleRef;
       onStart();
     });
   },
   stopFn: (app, onStop) => {
-    (<any>app).ng2.dispose();
+    app.data.moduleRef.destroy();
     onStop();
   }
 });
@@ -97,7 +113,7 @@ if (module.hot) {
 }
 ```
 
-# Usage example: Webpack, hot reload, angular1
+### Webpack, hot reload, angular1
 
 ```js
 // -- helpers
@@ -106,8 +122,8 @@ function requireAll(r) { r.keys().forEach(r); }
 // define the ng1 app module, only if not defined yet
 if (!window.__ng1AppDefined) {
   angular.module("app", []);
+  window.__ng1AppDefined = true;
 }
-window.__ng1AppDefined = true;
 
 // Require the ng1 app code: its' directives, components, services code and so on
 //
@@ -116,7 +132,7 @@ window.__ng1AppDefined = true;
 //      If not, propably it will raise error while redefining the ng1 directives/components.
 requireAll(require.context('./ng1/', true, /\.js$/));
 
-let app = window.app = new HotApp({
+const app = window.app = new HotApp({
   oldApp: window.app,
   getRootElement: function() { return document.body; },
   startFn: (app, onStart) => {
@@ -128,7 +144,6 @@ let app = window.app = new HotApp({
     onStop();
   }
 });
-
 app.startOnDOMReady();
 
 // Webpack hot reload support

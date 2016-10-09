@@ -1,4 +1,6 @@
 export declare class HotApp {
+  public data: any;
+  
   private rootElementHtml: string;
   private startFn: Function;
   private stopFn: Function;
