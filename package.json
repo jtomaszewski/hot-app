@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "App wrapper to make it start, stop and restart easily through the browser console or f.e. webpack hot reload.",
   "main": "hot-app.js",
+  "typings": "hot-app.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
