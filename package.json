@@ -1,0 +1,24 @@
+{
+  "name": "hot-app",
+  "version": "1.0.0",
+  "description": "App wrapper to make it start, stop and restart easily through the browser console or f.e. webpack hot reload.",
+  "main": "hot-app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jtomaszewski/hot-app.git"
+  },
+  "keywords": [
+    "hot",
+    "reload",
+    "webpack"
+  ],
+  "author": "Jacek Tomaszewski <jacek@jtom.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jtomaszewski/hot-app/issues"
+  },
+  "homepage": "https://github.com/jtomaszewski/hot-app#readme"
+}
